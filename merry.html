@@ -94,37 +94,49 @@ button {
 
 <body>
 
-<audio id="clickSound" src="https://assets.mixkit.co/sfx/preview/mixkit-modern-click-box-check-1120.mp3"></audio>
+<!-- CLICK SOUNDS -->
+<audio id="s1" src="https://assets.mixkit.co/sfx/preview/mixkit-modern-click-box-check-1120.mp3"></audio>
+<audio id="s2" src="https://assets.mixkit.co/sfx/preview/mixkit-bubble-pop-up-alert-notification-2357.mp3"></audio>
+<audio id="s3" src="https://assets.mixkit.co/sfx/preview/mixkit-game-ball-tap-2073.mp3"></audio>
+<audio id="s4" src="https://assets.mixkit.co/sfx/preview/mixkit-magic-sweep-game-trophy-257.mp3"></audio>
+
+<!-- 🎶 YOUR CHRISTMAS SONG -->
+<audio id="christmasSong" src="https://raw.githubusercontent.com/surajkrishnas90-prog/christmas/main/christmas.mp3" loop></audio>
 
 <div class="box">
     <div class="progress" id="progressText">0 / 9 unlocked</div>
-    <img id="photo" src="" style="display:none;">
+    <img id="photo" style="display:none;">
     <p id="text">🎮 Tap to unlock memories</p>
     <button onclick="unlockNext()">Tap to Unlock 🔓</button>
 </div>
 
 <script>
 let memories = [
-  "https://raw.githubusercontent.com/surajkrishnas90-prog/christmas/refs/heads/main/WhatsApp%20Image%202025-12-24%20at%2011.17.42%20PM%20(1).jpeg",
-  "https://raw.githubusercontent.com/surajkrishnas90-prog/christmas/refs/heads/main/WhatsApp%20Image%202025-12-24%20at%2011.17.43%20PM%20(1).jpeg",
-  "https://raw.githubusercontent.com/surajkrishnas90-prog/christmas/refs/heads/main/WhatsApp%20Image%202025-12-24%20at%2011.17.43%20PM%20(3).jpeg",
-  "https://raw.githubusercontent.com/surajkrishnas90-prog/christmas/refs/heads/main/WhatsApp%20Image%202025-12-24%20at%2011.17.44%20PM.jpeg",
-  "https://raw.githubusercontent.com/surajkrishnas90-prog/christmas/refs/heads/main/WhatsApp%20Image%202025-12-24%20at%2011.17.43%20PM%20(2).jpeg",
-  "https://raw.githubusercontent.com/surajkrishnas90-prog/christmas/refs/heads/main/WhatsApp%20Image%202025-12-24%20at%2011.17.43%20PM.jpeg",
-  "https://raw.githubusercontent.com/surajkrishnas90-prog/christmas/refs/heads/main/WhatsApp%20Image%202025-12-24%20at%2011.17.42%20PM%20(1).jpeg",
-  "https://raw.githubusercontent.com/surajkrishnas90-prog/christmas/refs/heads/main/WhatsApp%20Image%202025-12-24%20at%2011.17.44%20PM%20(1).jpeg",
-  "https://raw.githubusercontent.com/surajkrishnas90-prog/christmas/refs/heads/main/WhatsApp%20Image%202025-12-24%20at%2011.17.44%20PM%20(2).jpeg"
+  "https://raw.githubusercontent.com/surajkrishnas90-prog/christmas/main/WhatsApp%20Image%202025-12-24%20at%2011.17.42%20PM%20(1).jpeg",
+  "https://raw.githubusercontent.com/surajkrishnas90-prog/christmas/main/WhatsApp%20Image%202025-12-24%20at%2011.17.43%20PM%20(1).jpeg",
+  "https://raw.githubusercontent.com/surajkrishnas90-prog/christmas/main/WhatsApp%20Image%202025-12-24%20at%2011.17.43%20PM%20(3).jpeg",
+  "https://raw.githubusercontent.com/surajkrishnas90-prog/christmas/main/WhatsApp%20Image%202025-12-24%20at%2011.17.44%20PM.jpeg",
+  "https://raw.githubusercontent.com/surajkrishnas90-prog/christmas/main/WhatsApp%20Image%202025-12-24%20at%2011.17.43%20PM%20(2).jpeg",
+  "https://raw.githubusercontent.com/surajkrishnas90-prog/christmas/main/WhatsApp%20Image%202025-12-24%20at%2011.17.43%20PM.jpeg",
+  "https://raw.githubusercontent.com/surajkrishnas90-prog/christmas/main/WhatsApp%20Image%202025-12-24%20at%2011.17.44%20PM%20(1).jpeg",
+  "https://raw.githubusercontent.com/surajkrishnas90-prog/christmas/main/WhatsApp%20Image%202025-12-24%20at%2011.17.44%20PM%20(2).jpeg",
+  "https://raw.githubusercontent.com/surajkrishnas90-prog/christmas/main/WhatsApp%20Image%202025-12-24%20at%2011.17.42%20PM.jpeg"
 ];
 
 let finalPhoto = "https://raw.githubusercontent.com/surajkrishnas90-prog/christmas/main/me.jpeg";
 let index = 0;
+let sounds = ["s1","s2","s3","s4"];
+let soundIndex = 0;
+
+function playSound() {
+    let a = document.getElementById(sounds[soundIndex]);
+    a.currentTime = 0;
+    a.play();
+    soundIndex = (soundIndex + 1) % sounds.length;
+}
 
 function vibrate() {
     if (navigator.vibrate) navigator.vibrate(40);
-}
-
-function playClick() {
-    document.getElementById("clickSound").play();
 }
 
 function snowEffect() {
@@ -139,7 +151,7 @@ function snowEffect() {
 }
 
 function unlockNext() {
-    playClick();
+    playSound();
     vibrate();
 
     let img = document.getElementById("photo");
@@ -159,9 +171,16 @@ function unlockNext() {
         progress.innerText = "Unlocked ✨";
         text.innerHTML = `
             🎄 Merry Christmas 🎄<br><br>
-             😹🤍<br>
+            Only real ones made it here 🤍<br>
             Made it just for funnnn 😄🎄
         `;
+
+        // 🎶 PLAY YOUR SONG
+        let song = document.getElementById("christmasSong");
+        song.currentTime = 0;
+        song.volume = 0.6;
+        song.play();
+
         snowEffect();
     }
 }
@@ -169,4 +188,3 @@ function unlockNext() {
 
 </body>
 </html>
-
