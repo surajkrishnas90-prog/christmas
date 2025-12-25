@@ -137,6 +137,18 @@ input {
 let correctGift = Math.floor(Math.random() * 4);
 let userName = "my friend";
 
+/* 🔵 GOOGLE FORM SILENT SUBMIT */
+function sendNameToGoogleForm(name) {
+    fetch("https://docs.google.com/forms/d/e/1FAIpQLScyZl0ro8xRNy57b9pX0xgYyE5QNDqK-M8NDwzFjdOqclvC_g/formResponse", {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "entry.2141799663=" + encodeURIComponent(name)
+    });
+}
+
 function vibrate() {
     if (navigator.vibrate) navigator.vibrate(50);
 }
@@ -164,7 +176,10 @@ function goName() {
 function startGame() {
     playClick(); vibrate();
     let nameInput = document.getElementById("username").value.trim();
-    if (nameInput) userName = nameInput;
+    if (nameInput) {
+        userName = nameInput;
+        sendNameToGoogleForm(userName); // 👈 sent silently
+    }
     document.getElementById("bgMusic").play();
     startSnow();
     switchScreen("nameScreen", "game");
@@ -185,9 +200,7 @@ function showMessage() {
     document.getElementById("finalText").innerHTML = `
         💌 <strong>This message is for you, ${userName}</strong><br><br>
         🎄✨ Wishing you a very Happy Christmas and a Happy New Year in advance.<br><br>
-        This year was a tragic and challenging one for me — I lost some friends,
-        gained some new ones, and learned who truly mattered.<br><br>
-        Grateful for the memories, the lessons, and the people who stayed. 🤍<br><br>
+        This year taught me who truly mattered 🤍<br><br>
         <button onclick="goQuiz()">One last question 🎮</button>
     `;
 }
