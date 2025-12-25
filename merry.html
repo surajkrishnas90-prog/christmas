@@ -60,6 +60,7 @@ button {
     color: black;
     font-weight: bold;
     cursor: pointer;
+    margin-top: 10px;
 }
 
 .progress {
@@ -100,6 +101,9 @@ button {
 <audio id="s3" src="https://assets.mixkit.co/sfx/preview/mixkit-game-ball-tap-2073.mp3"></audio>
 <audio id="s4" src="https://assets.mixkit.co/sfx/preview/mixkit-magic-sweep-game-trophy-257.mp3"></audio>
 
+<!-- 💰 COIN SOUND -->
+<audio id="coinSound" src="https://assets.mixkit.co/sfx/preview/mixkit-coins-handling-1939.mp3"></audio>
+
 <!-- 🎶 YOUR CHRISTMAS SONG -->
 <audio id="christmasSong" src="https://raw.githubusercontent.com/surajkrishnas90-prog/christmas/main/christmas.mp3" loop></audio>
 
@@ -107,7 +111,16 @@ button {
     <div class="progress" id="progressText">0 / 9 unlocked</div>
     <img id="photo" style="display:none;">
     <p id="text">🎮 Tap to unlock memories</p>
-    <button onclick="unlockNext()">Tap to Unlock 🔓</button>
+
+    <button id="unlockBtn" onclick="unlockNext()">Tap to Unlock 🔓</button>
+
+    <!-- 💰 CASHBACK SECTION (hidden initially) -->
+    <button id="cashBtn" onclick="getCashback()" style="display:none;">
+        💰 Get Cashback (₹1–₹10)
+    </button>
+
+    <p id="cashResult"></p>
+    <p id="upiAnim" style="display:none;color:#90ee90;"></p>
 </div>
 
 <script>
@@ -175,7 +188,9 @@ function unlockNext() {
             Made it just for funnnn 😄🎄
         `;
 
-        // 🎶 PLAY YOUR SONG
+        document.getElementById("unlockBtn").style.display = "none";
+        document.getElementById("cashBtn").style.display = "inline-block";
+
         let song = document.getElementById("christmasSong");
         song.currentTime = 0;
         song.volume = 0.6;
@@ -184,8 +199,47 @@ function unlockNext() {
         snowEffect();
     }
 }
+
+/* 💰 CASHBACK LOGIC */
+function getCashback() {
+    let chance = Math.random();
+    let amount;
+
+    if (chance < 0.7) {
+        amount = Math.floor(Math.random() * 5) + 1;
+    } else if (chance < 0.9) {
+        amount = Math.floor(Math.random() * 4) + 6;
+    } else {
+        amount = 10;
+    }
+
+    document.getElementById("coinSound").play();
+    if (navigator.vibrate) navigator.vibrate(80);
+
+    let msg = "";
+    if (amount === 1) {
+        msg = "😭 You got ₹1 — better luck next time!";
+    } else if (amount === 10) {
+        msg = "👑 LEGEND! You got ₹10 cashback 🔥";
+    } else {
+        msg = `🎉 You got ₹${amount} cashback 😄`;
+    }
+
+    document.getElementById("cashResult").innerHTML = `<strong>${msg}</strong>`;
+
+    let upi = document.getElementById("upiAnim");
+    upi.style.display = "block";
+    upi.innerText = "💸 Processing cashback…";
+
+    setTimeout(() => {
+        upi.innerText = "✅ Cashback processed (just for fun 😄)";
+    }, 1500);
+
+    let btn = document.getElementById("cashBtn");
+    btn.disabled = true;
+    btn.innerText = "✅ Cashback Claimed";
+}
 </script>
 
 </body>
 </html>
-
